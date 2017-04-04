@@ -1,18 +1,21 @@
 import requests, bs4
 from bs4 import BeautifulSoup
 
-cookies = {'birthtime': '568022401'}
-res = requests.get('http://store.steampowered.com/app/431240/', cookies=cookies)
+
+
+##Creating cookie to bypass age gate
+cookies = {'birthtime': '568022401', 'mature_content': '1'}
+
+#Getting target page html
+res = requests.get('http://store.steampowered.com/app/608800/', cookies=cookies)
 res.raise_for_status()
 
 soup = BeautifulSoup(res.text, 'html.parser')
 
 
-#print (soup.find(class_="game_area_purchase_game"))
-price=soup.select('.discount_final_price')
-print (soup.find(class_="discount_final_price").contents)
-#print (price)
+gamePrice=soup.find(class_="price").string
+gameName=soup.find(class_="apphub_AppName").string
 
 
-#print (soup.prettify)
 
+print (str(gamePrice).strip())
